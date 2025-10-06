@@ -16,9 +16,9 @@
 
       <div style="margin-bottom:8px"><strong>Total:</strong> {{ total | currency:'BRL' }}</div>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" subscriptSizing="dynamic">
         <mat-label>Status</mat-label>
-        <mat-select formControlName="status" required>
+        <mat-select formControlName="status" required panelClass="dropdown-below">
           <mat-option value="LANCADO">Lançado</mat-option>
           <mat-option value="EM_ANDAMENTO">Em andamento</mat-option>
           <mat-option value="DESPACHADO">Despachado</mat-option>
