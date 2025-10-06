@@ -1,0 +1,3 @@
+com\sat\pedidos\api\controller\PedidoControllerTest.class
+com\sat\pedidos\api\controller\ProdutoControllerTest.class
+com\sat\pedidos\domain\service\impl\PedidoServiceImplTest.class

@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-title>Produto</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required>
+        <mat-error *ngIf="form.controls.nome.hasError('required')">Informe o nome</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Preço</mat-label>
+        <input matInput type="number" step="0.01" formControlName="preco" required>
+        <mat-error *ngIf="form.controls.preco.hasError('required')">Informe o preço</mat-error>
+        <mat-error *ngIf="form.controls.preco.hasError('min')">Preço deve ser maior que 0</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+      <button mat-button type="button" routerLink="/produtos">Cancelar</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
+

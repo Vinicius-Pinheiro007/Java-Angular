@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-title>Cliente</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required>
+        <mat-error *ngIf="form.controls.nome.hasError('required')">Informe o nome</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>CPF/CNPJ</mat-label>
+        <input matInput formControlName="documento" required maxlength="18" (input)="maskDocumento($event)">
+        <mat-hint>Somente números (será validado)</mat-hint>
+        <mat-error *ngIf="form.controls.documento.hasError('required')">Informe o CPF/CNPJ</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+      <button mat-button type="button" routerLink="/clientes">Cancelar</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
+
