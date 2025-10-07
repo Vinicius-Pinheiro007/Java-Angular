@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-export interface Cliente { id: number; nome: string; }
+export interface Cliente { id: number; nome: string; documento?: string; }
 
 @Injectable({ providedIn: 'root' })
 export class ClientesApiService {

@@ -16,6 +16,7 @@ export class PedidosListComponent implements OnInit {
   dataSource: Pedido[] = [];
   loading = false;
   clienteNomeById = new Map<number,string>();
+  filterValue = '';
 
   constructor(
     private api: PedidosApiService,
@@ -27,6 +28,18 @@ export class PedidosListComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregar();
+  }
+
+  filteredData(): Pedido[] {
+    const term = (this.filterValue || '').toLowerCase();
+    if (!term) return this.dataSource;
+    return this.dataSource.filter(p => {
+      const nome = (this.clienteNomeById.get(p.clienteId) || '').toLowerCase();
+      const valor = String(p.valor || '').toLowerCase();
+      const status = String(p.status || '').toLowerCase();
+      const data = String(p.dataCriacao || '').toLowerCase();
+      return nome.includes(term) || valor.includes(term) || status.includes(term) || data.includes(term);
+    });
   }
 
   carregar(): void {

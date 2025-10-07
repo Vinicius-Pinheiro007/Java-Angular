@@ -11,8 +11,9 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog.component';
   styleUrls: ['./clientes-list.component.css']
 })
 export class ClientesListComponent implements OnInit {
-  displayedColumns = ['id', 'nome', 'acoes'];
+  displayedColumns = ['id', 'nome', 'documento', 'acoes'];
   dataSource: Cliente[] = [];
+  filterValue = '';
 
   constructor(
     private api: ClientesApiService,
@@ -28,6 +29,12 @@ export class ClientesListComponent implements OnInit {
       next: dados => this.dataSource = dados,
       error: () => this.snack.open('Erro ao carregar clientes', 'Fechar', { duration: 3000 })
     });
+  }
+
+  filteredData(): Cliente[] {
+    const term = (this.filterValue || '').toLowerCase();
+    if (!term) return this.dataSource;
+    return this.dataSource.filter(c => (c.nome || '').toLowerCase().includes(term) || (c.documento || '').toLowerCase().includes(term));
   }
 
   novo(): void { this.router.navigate(['/clientes/novo']); }

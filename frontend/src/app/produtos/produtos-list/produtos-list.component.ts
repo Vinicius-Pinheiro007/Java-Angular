@@ -13,6 +13,7 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog.component';
 export class ProdutosListComponent implements OnInit {
   displayedColumns = ['id', 'nome', 'preco', 'acoes'];
   dataSource: Produto[] = [];
+  filterValue = '';
 
   constructor(
     private api: ProdutosApiService,
@@ -30,6 +31,12 @@ export class ProdutosListComponent implements OnInit {
       next: dados => this.dataSource = dados,
       error: () => this.snack.open('Erro ao carregar produtos', 'Fechar', { duration: 3000 })
     });
+  }
+
+  filteredData(): Produto[] {
+    const term = (this.filterValue || '').toLowerCase();
+    if (!term) return this.dataSource;
+    return this.dataSource.filter(p => (p.nome || '').toLowerCase().includes(term) || String(p.preco || '').includes(term));
   }
 
   novo(): void { this.router.navigate(['/produtos/novo']); }

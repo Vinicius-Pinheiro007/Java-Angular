@@ -2,11 +2,11 @@
   <button mat-raised-button color="primary" (click)="novo()">Novo</button>
   <mat-form-field appearance="standard" style="margin-left:16px; width:420px">
     <mat-label>Filtrar</mat-label>
-    <input matInput placeholder="Cliente, documento, valor, status ou data" #filtro>
+    <input matInput placeholder="Cliente, documento, valor, status ou data" [(ngModel)]="filterValue">
   </mat-form-field>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z2" *ngIf="!loading">
+<table mat-table [dataSource]="filteredData()" class="mat-elevation-z2 desktop-only" *ngIf="!loading">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
     <td mat-cell *matCellDef="let p"> {{p.id}} </td>
@@ -41,12 +41,23 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-      [hidden]="filtro.value && !(clienteNomeById.get(row.clienteId)||'').toLowerCase().includes(filtro.value.toLowerCase())
-                 && !(row.valor+'').includes(filtro.value)
-                 && !(row.status||'').toLowerCase().includes(filtro.value.toLowerCase())
-                 && !(row.dataCriacao||'').toLowerCase().includes(filtro.value.toLowerCase())"></tr>
-</table>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+<div class="cards mobile-only" *ngIf="!loading">
+  <mat-card *ngFor="let p of filteredData()">
+    <mat-card-title>#{{p.id}} - {{clienteNomeById.get(p.clienteId) || p.clienteId}}</mat-card-title>
+    <mat-card-content>
+      <div>Valor: {{p.valor | currency:'BRL'}}</div>
+      <div>Status: {{p.status}}</div>
+      <div>Criado em: {{p.dataCriacao | date:'short'}}</div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-icon-button (click)="editar(p.id)" aria-label="Editar"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="confirmarExclusao(p.id)" aria-label="Excluir"><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
 <div *ngIf="loading">Carregando...</div>
 

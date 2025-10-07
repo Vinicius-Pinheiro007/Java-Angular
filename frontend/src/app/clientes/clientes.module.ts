@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../shared/shared.module';
+import { DocumentoPipe } from '../shared/documento.pipe';
 
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
 import { ClientesFormComponent } from './clientes-form/clientes-form.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     MatTableModule,
     MatButtonModule,
@@ -38,7 +40,8 @@ const routes: Routes = [
     MatIconModule,
     MatDialogModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    DocumentoPipe
   ]
 })
 export class ClientesModule {}
